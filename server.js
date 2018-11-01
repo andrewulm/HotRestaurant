@@ -2,52 +2,51 @@
 const express = require('express');
 const path = require('path');
 
-// Set up Express
+// Initialize
 const app = express();
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 3000;
 
-// Setup express app to handle data parsing
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-
-// Data
+// Variables
 let reservations = [];
 let waitlist = [];
 
-// URL Routes
+// Content Routes
 app.get('/', (req, res) => {
-   res.sendFile(path.join(__dirname, 'index.html'));
+   res.sendFile(path.join(__dirname, 'home.html'));
 });
 
-app.get('/make-reservation', (req, res) => {
-    res.sendFile(path.join(__dirname, 'make-reservation.html'));
+app.get('/reserve', (req, res) => {
+   res.sendFile(path.join(__dirname, 'reserve.html'));
 });
 
-app.get('/view-reservations', (req, res) => {
-   res.sendFile(path.join(__dirname, 'view-reservations.html'));
-});
-
-// Post Routes
-app.post('/api/reservations', (req, res) => {
-   let newReservation = req.body;
-   console.log(reservations.length);
-
-   if ( reservations.length < 5 ) {
-       reservations.push(newReservation);
-   } else {
-       waitlist.push(newReservation);
-   }
-
-   res.json(newReservation);
+app.get('/tables', (req, res) => {
+   res.sendFile(path.join(__dirname, 'tables.html'));
 });
 
 // JSON Routes
+app.post('api/tables', (req, res) => {
+   let newReservation = req.body;
+
+   if (reservations.length <= 5) {
+       reservations.push(newReservation);
+   } else {
+      app.post('api/waitlist', (req, res) => {
+         waitlist.push(newReservation);
+      })
+   }
+    res.json(newReservation);
+});
+
 app.get('/api/reservations', (req, res) => {
-    return res.json(reservations);
+   reservations.forEach( (i) => {
+      return res.json(reservations[i]);
+   })
 });
 
 app.get('/api/waitlist', (req, res) => {
-    return res.json(waitlist);
+   waitlist.forEach( (i) => {
+      return res.json(waitlist[i]);
+   })
 });
 
 // Listener

@@ -1,14 +1,16 @@
 {
-  "name": "hotrestaurant",
+  "name": "hotrestuarant",
   "version": "1.0.0",
-  "description": "Table tracker",
+  "description": "Hot Restuarant reservation app",
   "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Andrew Ulm",
-  "license": "MIT",
   "dependencies": {
     "express": "^4.16.4"
-  }
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Andrew Ulm",
+  "license": "MIT"
 }
