@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hot Restaurant - View Reservation</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <header class="jumbotron text-center">
+        <h1>Hot Restaurant</h1>
+        <h3>View Reservations</h3>
+        <hr>
+        <a href="/"><button class="btn btn-default btn-lg"><span class="fa fa-home"></span></button></a>
+        <a href="/make-reservation"><button class="btn btn-danger btn-lg"><span class="fa fa-plus"></span> Make Reservation</button></a>
+        <a href="/view-reservations"><button class="btn btn-success btn-lg"><span class="fa fa-th-list"></span> View Reservations</button></a>
+    </header>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3><strong>Current Reservations</strong></h3>
+                </div>
+                <div class="card-body">
+                    <ul id="current-reservations">
+                        <!-- Reservations go here -->
+                    </ul>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h3><strong>Current Waitlist</strong></h3>
+                </div>
+                <div class="card-body">
+                    <ul id="current-waitlist">
+                        <!-- Waitlist goes here -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <hr>
+        <a href="/api/reservations">API Table Link</a> | <a href="/api/waitlist">API Wait List</a>
+    </footer>
+</div>
+
+<!-- // Client Side logic // -->
+<script>
+    $.get('/api/reservations', (data) => {
+       if (data) {
+           let reservation = data;
+           let list = $('#current-reservations');
+
+           reservation.forEach( (i) => {
+               let listItem = $('<li>');
+               listItem.append(`
+               <h6>Name: ${i.name}</h6>
+               <h6>Phone: ${i.phone}</h6>
+               <h6>E-Mail: ${i.email}</h6>
+               <h6>ID: ${i.id}</h6>
+               <hr/>
+               `);
+
+               list.append(listItem);
+           })
+       }
+    });
+
+    $.get('/api/waitlist', (data) => {
+        if (data) {
+            let waitlist = data;
+            let list = $('#current-waitlist');
+
+            waitlist.forEach( (i) => {
+                let listItem = $('<li>');
+                listItem.append(`
+               <h6>Name: ${i.name}</h6>
+               <h6>Phone: ${i.phone}</h6>
+               <h6>E-Mail: ${i.email}</h6>
+               <h6>ID: ${i.id}</h6>
+               <hr/>
+               `);
+
+                list.append(listItem);
+            })
+        }
+    });
+
+</script>
+</body>
+</html>

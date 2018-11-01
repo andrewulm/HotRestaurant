@@ -1,0 +1,14 @@
+{
+  "name": "hotrestaurant",
+  "version": "1.0.0",
+  "description": "Table tracker",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Andrew Ulm",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
